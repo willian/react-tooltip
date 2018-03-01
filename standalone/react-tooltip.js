@@ -1702,6 +1702,7 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
       if (insecure) {
         this.setStyleHeader(); // Set the style to the <link>
       }
+      this.setStyle();
       this.bindListener(); // Bind listener for tooltip
       this.bindWindowEvents(resizeHide); // Bind global event for static method
     }
@@ -2022,6 +2023,15 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
     value: function removeScrollListener() {
       window.removeEventListener('scroll', this.hideTooltip);
     }
+  }, {
+    key: 'setStyle',
+    value: function setStyle() {
+      var style = this.props.style;
+
+      var node = _reactDom2.default.findDOMNode(this);
+      var newStyle = Object.assign(node.style || {}, style);
+      node.style = newStyle;
+    }
 
     // Calculation the position
 
@@ -2140,11 +2150,13 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
   disable: _propTypes2.default.bool,
   scrollHide: _propTypes2.default.bool,
   resizeHide: _propTypes2.default.bool,
-  wrapper: _propTypes2.default.string
+  wrapper: _propTypes2.default.string,
+  style: _propTypes2.default.object
 }, _class2.defaultProps = {
   insecure: true,
   resizeHide: true,
-  wrapper: 'div'
+  wrapper: 'div',
+  style: {}
 }, _class2.supportedWrappers = ['div', 'span'], _temp)) || _class) || _class) || _class) || _class) || _class) || _class;
 
 /* export default not fit for standalone, it will exports {default:...} */

@@ -56,13 +56,15 @@ class ReactTooltip extends Component {
     disable: PropTypes.bool,
     scrollHide: PropTypes.bool,
     resizeHide: PropTypes.bool,
-    wrapper: PropTypes.string
+    wrapper: PropTypes.string,
+    style: PropTypes.object
   };
 
   static defaultProps = {
     insecure: true,
     resizeHide: true,
-    wrapper: 'div'
+    wrapper: 'div',
+    style: {}
   };
 
   static supportedWrappers = ['div', 'span'];
@@ -120,6 +122,7 @@ class ReactTooltip extends Component {
     if (insecure) {
       this.setStyleHeader() // Set the style to the <link>
     }
+    this.setStyle()
     this.bindListener() // Bind listener for tooltip
     this.bindWindowEvents(resizeHide) // Bind global event for static method
   }
@@ -383,6 +386,13 @@ class ReactTooltip extends Component {
 
   removeScrollListener () {
     window.removeEventListener('scroll', this.hideTooltip)
+  }
+
+  setStyle () {
+    const { style } = this.props
+    const node = ReactDOM.findDOMNode(this)
+    const newStyle = Object.assign(node.style || {}, style)
+    node.style = newStyle
   }
 
   // Calculation the position
