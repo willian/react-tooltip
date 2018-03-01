@@ -1669,7 +1669,7 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
       disable: false
     };
 
-    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize']);
+    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize', 'setStyle']);
 
     _this.mount = true;
     _this.delayShowLoop = null;
@@ -1702,7 +1702,6 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
       if (insecure) {
         this.setStyleHeader(); // Set the style to the <link>
       }
-      this.setStyle();
       this.bindListener(); // Bind listener for tooltip
       this.bindWindowEvents(resizeHide); // Bind global event for static method
     }
@@ -2029,8 +2028,9 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
       var style = this.props.style;
 
       var node = _reactDom2.default.findDOMNode(this);
-      var newStyle = Object.assign(node.style || {}, style);
-      node.style = newStyle;
+      Object.keys(style).forEach(function (key) {
+        node.style[key] = style[key];
+      });
     }
 
     // Calculation the position
@@ -2059,6 +2059,7 @@ var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.de
       // Set tooltip position
       node.style.left = result.position.left + 'px';
       node.style.top = result.position.top + 'px';
+      this.setStyle();
     }
 
     /**

@@ -99,7 +99,8 @@ class ReactTooltip extends Component {
       'globalRebuild',
       'globalShow',
       'globalHide',
-      'onWindowResize'
+      'onWindowResize',
+      'setStyle'
     ])
 
     this.mount = true
@@ -122,7 +123,6 @@ class ReactTooltip extends Component {
     if (insecure) {
       this.setStyleHeader() // Set the style to the <link>
     }
-    this.setStyle()
     this.bindListener() // Bind listener for tooltip
     this.bindWindowEvents(resizeHide) // Bind global event for static method
   }
@@ -391,8 +391,9 @@ class ReactTooltip extends Component {
   setStyle () {
     const { style } = this.props
     const node = ReactDOM.findDOMNode(this)
-    const newStyle = Object.assign(node.style || {}, style)
-    node.style = newStyle
+    Object.keys(style).forEach((key) => {
+      node.style[key] = style[key]
+    })
   }
 
   // Calculation the position
@@ -410,6 +411,7 @@ class ReactTooltip extends Component {
     // Set tooltip position
     node.style.left = result.position.left + 'px'
     node.style.top = result.position.top + 'px'
+    this.setStyle()
   }
 
   /**
